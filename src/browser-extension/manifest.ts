@@ -52,24 +52,21 @@ export function getManifest(browser: 'firefox' | 'chromium') {
         },
 
         host_permissions: [
+            // AI Provider APIs - intentional communication only
             'https://*.openai.com/',
             'https://*.openai.azure.com/',
-            'https://*.ingest.sentry.io/',
-            '*://speech.platform.bing.com/',
-            'https://*.googletagmanager.com/',
-            'https://*.google-analytics.com/',
             'https://*.minimax.chat/',
-            'https://*.githubusercontent.com/',
-            'https://*.baidu.com/',
-            'https://api-edge.cognitive.microsofttranslator.com/',
-            'https://*.microsoft.com/',
-            'https://*.google.com/',
-            'https://*.googleapis.com/',
             'https://*.moonshot.cn/',
             'https://*.volces.com/',
             'https://*.chatglm.cn/',
             'https://*.cohere.ai/',
             'https://*.deepseek.com/',
+            // Essential services
+            '*://speech.platform.bing.com/',
+            'https://api-edge.cognitive.microsofttranslator.com/',
+            'https://*.microsoft.com/',
+            'https://*.google.com/',
+            'https://*.googleapis.com/',
         ],
     }
 

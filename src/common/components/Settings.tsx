@@ -1450,20 +1450,6 @@ export function InnerSettings({
         },
         [isTauri]
     )
-    const trackTauriEvent = useCallback(
-        async (eventName: string, payload?: Record<string, string | number>) => {
-            if (!isTauri) {
-                return
-            }
-            try {
-                const { trackEvent } = await import('@aptabase/tauri')
-                await trackEvent(eventName, payload)
-            } catch (error) {
-                console.error(`Failed to track event ${eventName}`, error)
-            }
-        },
-        [isTauri]
-    )
 
     useEffect(() => {
         if (!isTauri) {
@@ -1495,8 +1481,8 @@ export function InnerSettings({
     }, [isTauri, refetchPromotions, registerFocusListener])
 
     useEffect(() => {
-        void trackTauriEvent('screen_view', { name: 'Settings' })
-    }, [trackTauriEvent])
+        // Telemetry disabled for privacy
+    }, [])
 
     const { theme, themeType } = useTheme()
 
@@ -1559,8 +1545,6 @@ export function InnerSettings({
                 refreshThemeType()
             }
 
-            void trackTauriEvent('save_settings')
-
             toast(t('Saved'), {
                 icon: '👍',
                 duration: 3000,
@@ -1569,7 +1553,7 @@ export function InnerSettings({
             setSettings(data)
             onSave?.(oldSettings)
         },
-        [isTauri, onSave, setSettings, refreshThemeType, t, trackTauriEvent]
+        [isTauri, onSave, setSettings, refreshThemeType, t]
     )
 
     const onBlur = useCallback(async () => {
@@ -1831,16 +1815,12 @@ export function InnerSettings({
     }, [setOpenaiAPIKeyPromotionShowed, isOpenAI])
 
     useEffect(() => {
-        if (isOpenAI && openaiAPIKeyPromotion) {
-            void trackTauriEvent('promotion_view', { id: openaiAPIKeyPromotion.id })
-        }
-    }, [isOpenAI, openaiAPIKeyPromotion, trackTauriEvent])
+        // Telemetry disabled for privacy
+    }, [])
 
     useEffect(() => {
-        if (disclaimerPromotion?.id) {
-            void trackTauriEvent('promotion_disclaimer_view', { id: disclaimerPromotion.id })
-        }
-    }, [disclaimerPromotion?.id, trackTauriEvent])
+        // Telemetry disabled for privacy
+    }, [])
 
     console.debug('render settings')
 
@@ -1914,7 +1894,6 @@ export function InnerSettings({
                             onClick={(e) => {
                                 e.stopPropagation()
                                 setShowBuyMeACoffee(true)
-                                void trackTauriEvent('buy_me_a_coffee_clicked')
                             }}
                         >
                             {'❤️  ' + t('Buy me a coffee')}
@@ -3181,7 +3160,6 @@ export function InnerSettings({
                             e.stopPropagation()
                             e.preventDefault()
                             if (isTauri) {
-                                void trackTauriEvent('promotion_clicked', { id: openaiAPIKeyPromotion?.id ?? '' })
                                 if (disclaimerAgreeLink) {
                                     void import('@tauri-apps/plugin-shell')
                                         .then(({ open }) => open(disclaimerAgreeLink))

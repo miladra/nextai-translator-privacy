@@ -18,10 +18,10 @@ import { format } from 'date-fns'
 import { useCollectedWordTotal } from '../hooks/useCollectedWordTotal'
 import { RiPictureInPictureExitLine } from 'react-icons/ri'
 import { Tooltip } from './Tooltip'
-import { isDesktopApp, isTauri } from '../utils'
+import { isDesktopApp } from '../utils'
 import { vocabularyService } from '../services/vocabulary'
 import { VocabularyItem } from '../internal-services/db'
-import { trackEvent } from '@aptabase/tauri'
+// Telemetry disabled for privacy: @aptabase/tauri import removed
 import { SpeakerIcon } from './SpeakerIcon'
 import { useSettings } from '../hooks/useSettings'
 import { LangCode, detectLang } from '../lang'
@@ -159,11 +159,7 @@ interface IVocabularyProps {
 
 const Vocabulary = (props: IVocabularyProps) => {
     useEffect(() => {
-        if (!isTauri()) {
-            return
-        }
-
-        trackEvent('screen_view', { name: 'Vocabulary' })
+        // Telemetry disabled for privacy
     }, [])
 
     const { theme, themeType } = useTheme()

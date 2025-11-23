@@ -20,18 +20,14 @@ import { useSetAtom } from 'jotai'
 
 import { showSettingsAtom } from '@/common/store/setting'
 import { commands } from '../bindings'
-import { trackEvent } from '@aptabase/tauri'
+// Telemetry disabled for privacy: @aptabase/tauri import removed
 
-addEventListener('unhandledrejection', (e) => {
-    trackEvent('promise_rejected', {
-        message: (e.reason?.message || e.reason || e).toString(),
-    })
+addEventListener('unhandledrejection', () => {
+    // Telemetry disabled for privacy: promise rejection events are not tracked
 })
 
-window.addEventListener('error', (e) => {
-    trackEvent('js_error', {
-        message: e.message,
-    })
+window.addEventListener('error', () => {
+    // Telemetry disabled for privacy: error events are not tracked
 })
 
 const engine = new Styletron({

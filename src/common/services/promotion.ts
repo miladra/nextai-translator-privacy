@@ -36,20 +36,8 @@ export interface IPromotionResponse {
 }
 
 export async function fetchPromotions(): Promise<IPromotionResponse> {
-    try {
-        const resp = await fetch(
-            `https://raw.githubusercontent.com/nextai-translator/nextai-translator-configs/main/promotions.json?ts=${Date.now()}`,
-            { cache: 'no-cache' }
-        )
-        if (!resp.ok) {
-            throw new Error(resp.statusText)
-        }
-        return resp.json()
-    } catch (error) {
-        console.error('Error fetching promotions: ', error)
-
-        return {}
-    }
+    // Promotions fetch disabled for privacy: no remote configuration is fetched
+    return {}
 }
 
 export async function choicePromotionItem(items?: IPromotionItem[]) {
